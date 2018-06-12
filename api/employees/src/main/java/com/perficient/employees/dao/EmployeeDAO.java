@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface EmployeeDAO {
     List<Employee> show(String id) throws Exception;
+    boolean create(Employee input) throws Exception;
 }

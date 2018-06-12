@@ -18,7 +18,9 @@
 
 | Action | Endpoint         | Route                                                        |
 |--------|------------------|--------------------------------------------------------------|
-| Read   | GET /employees/X | Route::get('employees/{emp_no}, 'EmployeeController.show');  |
+| Create | POST /employees/ | Route::post('employees/, 'EmployeeController.create');       |
+| Read   | GET /employees/X | Route::get('employees/{emp_no}, 'EmployeeController.read');  |
+
 
 #### Developer Environment
 

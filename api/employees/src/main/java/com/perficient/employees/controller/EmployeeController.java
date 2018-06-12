@@ -7,24 +7,40 @@ import com.perficient.employees.exception.UnhandledException;
 import com.perficient.employees.model.Employee;
 import com.perficient.employees.exception.DatabaseConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("employees/{emp_no}")
+@RequestMapping(value="employees")
 public class EmployeeController {
 
     @Autowired
     private EmployeeDAO employeeDAO;
 
-    @GetMapping
-    List<Employee> response(@PathVariable String emp_no) {
+    @PostMapping(consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<?> create(@RequestBody(required = false) Employee input) {
+        try {
+            employeeDAO.create(input);
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        } catch (Exception e) {
+            throw new UnhandledException(e.toString());
+        }
+        URI location = URI.create("https://www.google.com");
+        return ResponseEntity.created(location).body(input);
+    }
+
+    @GetMapping("/{emp_no}")
+    @ResponseStatus(HttpStatus.OK)
+    List<Employee> read(@PathVariable String emp_no) {
         validateEmployee(emp_no);
         try {
             return employeeDAO.show(emp_no);
@@ -44,6 +60,8 @@ public class EmployeeController {
             throw new DatabaseConnectionException(e.getMessage());
         } catch (SQLSyntaxErrorException e) {
             throw new DatabaseException(e.getMessage());
+        } catch (EmployeeNotFoundException e) {
+            throw new EmployeeNotFoundException(id);
         } catch (Exception e) {
             throw new UnhandledException(e.toString());
         }

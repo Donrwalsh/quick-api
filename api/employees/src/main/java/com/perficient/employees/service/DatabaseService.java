@@ -38,4 +38,11 @@ public class DatabaseService {
         ResultSet rs = stmt.executeQuery(query);
         return rs;
     }
+
+    public int performUpdate(String query) throws Exception {
+        Connection con = getConnection();
+        Statement stmt = con.createStatement();
+        int response = stmt.executeUpdate(query);
+        return response;
+    }
 }
