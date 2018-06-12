@@ -42,6 +42,9 @@
 
 #### APIs
 
+* As of right now, the validation for create calls not containing emp_nos just checks for the default value. This leads to a case where someone can use emp_no=0 with no error. Not a big issue, but would like to solve for completion.
+* Date offset by 1? what?!
+* Manually altered the emp_no column to be auto-increment. I'd like this to be present when I refresh the database as well.
 * Finish the update endpoint
 | * Currently the update endpoint tries to update the emp_no and fails, this needs to be changed at the database level.
 * Requesting generic input instead of an Employee

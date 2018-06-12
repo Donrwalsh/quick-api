@@ -34,15 +34,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public void create(Employee input) throws Exception {
-        databaseService.performUpdate(
+    public int create(Employee input) throws Exception {
+        return databaseService.performUpdate(
                 "INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES (" +
                         input.getEmpNo() + "," +
                         "'" + input.getBirthDate() + "', " +
                         "'" + input.getFirstName() + "', " +
                         "'" + input.getLastName() + "', " +
                         "'" + input.getGender() + "', " +
-                        "'" + input.getHireDate() + "')"
+                        "'" + input.getHireDate() + "');"
         );
     }
 

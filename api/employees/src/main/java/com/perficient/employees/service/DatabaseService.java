@@ -40,9 +40,14 @@ public class DatabaseService {
     }
 
     public int performUpdate(String query) throws Exception {
+        int resultID = 0;
         Connection con = getConnection();
         Statement stmt = con.createStatement();
-        int response = stmt.executeUpdate(query);
-        return response;
+        stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = stmt.getGeneratedKeys();
+        if (rs.next()){
+            resultID = rs.getInt(1);
+        }
+        return resultID;
     }
 }

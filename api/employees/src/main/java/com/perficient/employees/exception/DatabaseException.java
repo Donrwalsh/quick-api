@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class DatabaseException extends RuntimeException {
 
-    public DatabaseException(String error) { super(error); }
+    public DatabaseException(String error) { super("Database Exception: " + error); }
 }

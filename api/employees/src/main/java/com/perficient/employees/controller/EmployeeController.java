@@ -6,11 +6,13 @@ import com.perficient.employees.exception.EmployeeNotFoundException;
 import com.perficient.employees.exception.UnhandledException;
 import com.perficient.employees.model.Employee;
 import com.perficient.employees.exception.DatabaseConnectionException;
+import com.perficient.employees.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -24,15 +26,19 @@ public class EmployeeController {
     @Autowired
     private EmployeeDAO employeeDAO;
 
+    @Autowired
+    private ExceptionService exceptionService;
+
     @PostMapping(consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<?> create(@RequestBody() Employee input) {
+    ResponseEntity<?> create(@RequestBody() @Valid Employee input) {
+        if (input.getEmpNo() != 0) {
+            throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
+        }
         try {
-            employeeDAO.create(input);
-        } catch (SQLException e) {
-            throw new DatabaseException(e.getMessage());
+            input.setEmp_no(employeeDAO.create(input));
         } catch (Exception e) {
-            throw new UnhandledException(e.toString());
+            exceptionService.toss(e);
         }
         URI location = URI.create("http://www.quick-api.com/employees/employees/" + input.getEmpNo());
         return ResponseEntity.created(location).body(input);
@@ -46,7 +52,7 @@ public class EmployeeController {
         try {
             response = employeeDAO.show(emp_no);
         } catch (Exception e) {
-            throw new UnhandledException(e.toString());
+            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
         }
         return ResponseEntity.ok().body(response);
     }
@@ -57,7 +63,7 @@ public class EmployeeController {
         try {
             employeeDAO.update(emp_no, input);
         } catch (Exception e) {
-            throw new UnhandledException(e.toString());
+            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
         }
         return ResponseEntity.ok().body("hello world");
     }
@@ -75,7 +81,7 @@ public class EmployeeController {
         } catch (EmployeeNotFoundException e) {
             throw new EmployeeNotFoundException(id);
         } catch (Exception e) {
-            throw new UnhandledException(e.toString());
+            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
         }
     }
 }

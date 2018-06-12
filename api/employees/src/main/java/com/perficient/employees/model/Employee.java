@@ -1,14 +1,21 @@
 package com.perficient.employees.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 public class Employee {
 
     private int emp_no;
+    @NotNull
     private Date birth_date;
+    @NotNull
     private String first_name;
+    @NotNull
     private String last_name;
+    @NotNull
     private String gender;
+    @NotNull
     private Date hire_date;
 
     public Employee(int emp_no, Date birth_date, String first_name, String last_name, String gender, Date hire_date) {
@@ -27,4 +34,7 @@ public class Employee {
     public String getGender() { return gender; }
     public Date getHireDate() { return hire_date; }
 
+    public void setEmp_no(int emp_no) {
+        this.emp_no = emp_no;
+    }
 }
