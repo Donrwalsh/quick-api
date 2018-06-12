@@ -42,6 +42,12 @@
 
 #### APIs
 
+* Finish the update endpoint
+| * Currently the update endpoint tries to update the emp_no and fails, this needs to be changed at the database level.
+* Requesting generic input instead of an Employee
+* Error handling moved away from the Controller
+* Revisiting the table, auto-increment, foreign keys
+
 **Employees**
 * Database is established and shell API is in place. Time to rig it up.
 

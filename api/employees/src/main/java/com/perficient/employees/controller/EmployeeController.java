@@ -26,7 +26,7 @@ public class EmployeeController {
 
     @PostMapping(consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<?> create(@RequestBody(required = false) Employee input) {
+    ResponseEntity<?> create(@RequestBody() Employee input) {
         try {
             employeeDAO.create(input);
         } catch (SQLException e) {
@@ -34,22 +34,34 @@ public class EmployeeController {
         } catch (Exception e) {
             throw new UnhandledException(e.toString());
         }
-        URI location = URI.create("https://www.google.com");
+        URI location = URI.create("http://www.quick-api.com/employees/employees/" + input.getEmpNo());
         return ResponseEntity.created(location).body(input);
     }
 
     @GetMapping("/{emp_no}")
     @ResponseStatus(HttpStatus.OK)
-    List<Employee> read(@PathVariable String emp_no) {
+    ResponseEntity<?> read(@PathVariable String emp_no) {
         validateEmployee(emp_no);
+        List<Employee> response;
         try {
-            return employeeDAO.show(emp_no);
+            response = employeeDAO.show(emp_no);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            List<Employee> response = new ArrayList<>();
-            return response;
+            throw new UnhandledException(e.toString());
         }
+        return ResponseEntity.ok().body(response);
     }
+
+    @PutMapping(path = "/{emp_no}", consumes="application/json")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) {
+        try {
+            employeeDAO.update(emp_no, input);
+        } catch (Exception e) {
+            throw new UnhandledException(e.toString());
+        }
+        return ResponseEntity.ok().body("hello world");
+    }
+
 
     private void validateEmployee(String id) {
         try {
