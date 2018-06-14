@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,7 +65,6 @@ public class EmployeeController {
         }
         return ResponseEntity.ok().body("hello world");
     }
-
 
     private void validateEmployee(String id) {
         try {

@@ -42,17 +42,22 @@
 
 #### APIs
 
+**Employees**
+
+* Currently working on the Update endpoint.
+* Test by using `>mvn test` in the /api/employees/ directory. Try not to test any other way else the unstoppable problem may rear its ugly head!
+* Re-imagine the API table above.
+* Inside the Employee object itself, there is a new @JsonCreator annotation that is apparently critical to the test functionality added recently. Need to learn more about what this is actually doing and why it's so structurally important.
+* The current tests are running api calls (actual API calls) against the local database, which could cause problems as the two databases become more and more divergent. This could be fixed by pointing to the dev database, but ultimately tests should be mocking all this nonsense, so expanding the tests to be a little more correctly formed is the proper approach.
 * As of right now, the validation for create calls not containing emp_nos just checks for the default value. This leads to a case where someone can use emp_no=0 with no error. Not a big issue, but would like to solve for completion.
 * Date offset by 1? what?!
 * Manually altered the emp_no column to be auto-increment. I'd like this to be present when I refresh the database as well.
 * Finish the update endpoint
 | * Currently the update endpoint tries to update the emp_no and fails, this needs to be changed at the database level.
 * Requesting generic input instead of an Employee
-* Error handling moved away from the Controller
+* Error handling moved away from the Controller -> Started, needs to cover more than it does now. Also consider the approach. Is there a better way?
 * Revisiting the table, auto-increment, foreign keys
-
-**Employees**
-* Database is established and shell API is in place. Time to rig it up.
+* At some point, the hello-world endpoint and test need to go.
 
 #### Developer Environment
 
@@ -65,6 +70,4 @@
 `#E: Could not open lock file /var/lib/dpkg/lock - open (13: Permission denied)`
 
 `#E: Unable to lock the administration directory (/var/lib/dpkg/), are you root?`
-
-
 	

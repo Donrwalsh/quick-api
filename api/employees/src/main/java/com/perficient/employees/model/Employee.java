@@ -1,6 +1,7 @@
 package com.perficient.employees.model;
 
-import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -20,6 +21,17 @@ public class Employee {
 
     public Employee(int emp_no, Date birth_date, String first_name, String last_name, String gender, Date hire_date) {
         this.emp_no = emp_no;
+        this.birth_date = birth_date;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.hire_date = hire_date;
+    }
+
+    public Employee() {}
+
+    @JsonCreator
+    public Employee(Date birth_date, String first_name, String last_name, String gender, Date hire_date) {
         this.birth_date = birth_date;
         this.first_name = first_name;
         this.last_name = last_name;
