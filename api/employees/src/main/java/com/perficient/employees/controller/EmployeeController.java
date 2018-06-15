@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.sql.SQLSyntaxErrorException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,24 +34,28 @@ public class EmployeeController {
         if (input.getEmpNo() != 0) {
             throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
         }
+        List<Employee> response = new ArrayList<>();
+        URI location;
+        int createdID = 0;
         try {
-            input.setEmp_no(employeeDAO.create(input));
+            createdID = employeeDAO.create(input);
+            response = employeeDAO.show(Integer.toString(createdID));
         } catch (Exception e) {
             exceptionService.toss(e);
         }
-        URI location = URI.create("http://www.quick-api.com/employees/employees/" + input.getEmpNo());
-        return ResponseEntity.created(location).body(input);
+        location = URI.create("http://www.quick-api.com/employees/employees/" + createdID);
+        return ResponseEntity.created(location).body(response);
     }
 
     @GetMapping("/{emp_no}")
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<?> read(@PathVariable String emp_no) {
         validateEmployee(emp_no);
-        List<Employee> response;
+        List<Employee> response = new ArrayList<>();
         try {
             response = employeeDAO.show(emp_no);
         } catch (Exception e) {
-            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
+            exceptionService.toss(e);
         }
         return ResponseEntity.ok().body(response);
     }
@@ -58,12 +63,15 @@ public class EmployeeController {
     @PutMapping(path = "/{emp_no}", consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) {
+        validateEmployee(emp_no);
+        List<Employee> response = new ArrayList<>();
         try {
             employeeDAO.update(emp_no, input);
+            response = employeeDAO.show(emp_no);
         } catch (Exception e) {
-            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
+            exceptionService.toss(e);
         }
-        return ResponseEntity.ok().body("hello world");
+        return ResponseEntity.ok().body(response);
     }
 
     private void validateEmployee(String id) {
@@ -71,14 +79,8 @@ public class EmployeeController {
             if (this.employeeDAO.show(id).isEmpty()) {
                 throw new EmployeeNotFoundException(id);
             }
-        } catch (DatabaseConnectionException e) {
-            throw new DatabaseConnectionException(e.getMessage());
-        } catch (SQLSyntaxErrorException e) {
-            throw new DatabaseException(e.getMessage());
-        } catch (EmployeeNotFoundException e) {
-            throw new EmployeeNotFoundException(id);
         } catch (Exception e) {
-            throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
+            exceptionService.toss(e);
         }
     }
 }

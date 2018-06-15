@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class EmployeeNotFoundException extends RuntimeException {
 
     public EmployeeNotFoundException(String id) {
-        super("could not find user '" + id + "'.");
+        super("could not find user " + id);
     }
 
 }

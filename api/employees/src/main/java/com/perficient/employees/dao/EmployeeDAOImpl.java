@@ -49,8 +49,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public void update(String emp_no, Employee input) throws Exception {
         databaseService.performUpdate(
-                "UPDATE employees SET emp_no = " +
-                        input.getEmpNo() +
+                "UPDATE employees SET birth_date = " +
+                        "'" + input.getBirthDate() + "'" +
                         " WHERE emp_no = " + emp_no
         );
     }

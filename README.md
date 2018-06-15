@@ -15,6 +15,7 @@
 #### APIs
 
 **(Simple JDBC) Employees** - https://dev.mysql.com/doc/employee/en/
+* Test by using `>mvn test` in the /api/employees/ directory. Try not to test any other way else the unstoppable problem may rear its ugly head!
 
 | Action | Endpoint         | Route                                                        |
 |--------|------------------|--------------------------------------------------------------|
@@ -37,26 +38,23 @@
 * Connects to the database. Woohoo!
 * Maybe this isn't necessary.
 
-
 ## TODOs
 
 #### APIs
 
 **Employees**
 
-* Currently working on the Update endpoint.
-* Test by using `>mvn test` in the /api/employees/ directory. Try not to test any other way else the unstoppable problem may rear its ugly head!
+* Currently working on the Update endpoint. -> It is updating birthdate correctly, now to grab other fields and check to see if they actually exist before composing the SQL UPDATE statement.
+ --> handle emp_no the same way that the insert endpoint does.
+
 * Re-imagine the API table above.
 * Inside the Employee object itself, there is a new @JsonCreator annotation that is apparently critical to the test functionality added recently. Need to learn more about what this is actually doing and why it's so structurally important.
 * The current tests are running api calls (actual API calls) against the local database, which could cause problems as the two databases become more and more divergent. This could be fixed by pointing to the dev database, but ultimately tests should be mocking all this nonsense, so expanding the tests to be a little more correctly formed is the proper approach.
 * As of right now, the validation for create calls not containing emp_nos just checks for the default value. This leads to a case where someone can use emp_no=0 with no error. Not a big issue, but would like to solve for completion.
 * Date offset by 1? what?!
 * Manually altered the emp_no column to be auto-increment. I'd like this to be present when I refresh the database as well.
-* Finish the update endpoint
-| * Currently the update endpoint tries to update the emp_no and fails, this needs to be changed at the database level.
-* Requesting generic input instead of an Employee
-* Error handling moved away from the Controller -> Started, needs to cover more than it does now. Also consider the approach. Is there a better way?
-* Revisiting the table, auto-increment, foreign keys
+* Requesting generic input instead of an Employee -> may not be necessary.
+* Revisiting the table, auto-increment, foreign keys -> this was done but not retained.
 * At some point, the hello-world endpoint and test need to go.
 
 #### Developer Environment
