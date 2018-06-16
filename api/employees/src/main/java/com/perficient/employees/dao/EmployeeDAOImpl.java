@@ -71,4 +71,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         databaseService.performUpdate(query);
     }
 
+    @Override
+    public void delete(String emp_no) throws Exception {
+        databaseService.performUpdate("DELETE FROM employees WHERE emp_no = " + emp_no);
+    }
+
 }
