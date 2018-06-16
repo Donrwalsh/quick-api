@@ -19,6 +19,8 @@ public class ExceptionService {
                 throw new DatabaseConnectionException(e.getMessage());
             case "SQLSyntaxErrorException":
                 throw new DatabaseException(e.getMessage());
+            case "SQLException":
+                throw new DatabaseException(e.getMessage());
             default:
                 throw new UnhandledException(e.getClass().getSimpleName(), e.getMessage());
         }
