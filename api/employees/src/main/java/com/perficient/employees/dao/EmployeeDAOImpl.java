@@ -48,10 +48,27 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void update(String emp_no, Employee input) throws Exception {
-        databaseService.performUpdate(
-                "UPDATE employees SET birth_date = " +
-                        "'" + input.getBirthDate() + "'" +
-                        " WHERE emp_no = " + emp_no
-        );
+        boolean toggle = false;
+
+        List<Object> updates = new ArrayList<>();
+        updates.add(input.getBirthDate() == null ? null : "birth_date = '" + input.getBirthDate() + "'");
+        updates.add(input.getFirstName() == null ? null : "first_name = '" + input.getFirstName() + "'");
+        updates.add(input.getLastName() == null ? null : "last_name = '" + input.getLastName() + "'");
+        updates.add(input.getGender() == null ? null : "gender = '" + input.getGender() + "'");
+        updates.add(input.getHireDate() == null ? null : "hire_date = '" + input.getHireDate() + "'");
+
+        String query  = "UPDATE employees SET ";
+        for (Object object: updates) {
+            if (object != null) {
+                if (toggle) {
+                    query += ", ";
+                }
+                query += object;
+                toggle = true;
+            }
+        }
+        query += " WHERE emp_no = " + emp_no;
+        databaseService.performUpdate(query);
     }
+
 }
