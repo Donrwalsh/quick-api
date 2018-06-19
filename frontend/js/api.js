@@ -26,6 +26,7 @@ $(function () {
                        } else {
                            resJSON += "<p>";
                            resJSON += "<strong>Status:</strong> " + xhr.status + "<br />";
+                           resJSON += "<strong>ID:</strong> " + response.empNo + "<br />";
                            resJSON += "<strong>First Name:</strong> " + response.firstName + "<br />";
                            resJSON += "<strong>Last Name:</strong> " + response.lastName + "<br />";
                            resJSON += "<strong>Gender:</strong> " + response.gender + "<br />";
@@ -33,7 +34,7 @@ $(function () {
                            resJSON += "<strong>Hire Date:</strong> " + response.hireDate + "<br />";
                            resJSON += "</p>"
                        }
-                       $(".output").append(resJSON);
+                       $(".output").empty().append(resJSON);
                     });
                 } else {
                     alert("failure");
