@@ -2,6 +2,7 @@ package com.perficient.employees.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -11,10 +12,13 @@ public class Employee {
     @NotNull
     private Date birth_date;
     @NotNull
+    @NotEmpty
     private String first_name;
     @NotNull
+    @NotEmpty
     private String last_name;
     @NotNull
+    @NotEmpty
     private String gender;
     @NotNull
     private Date hire_date;

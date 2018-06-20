@@ -44,6 +44,7 @@
 
 **Employees**
 
+* Would be nice if the debugMessage only shows up in Dev.
 * Currently working on the Update endpoint. -> It is updating birthdate correctly, now to grab other fields and check to see if they actually exist before composing the SQL UPDATE statement.
  --> handle emp_no the same way that the insert endpoint does.
 

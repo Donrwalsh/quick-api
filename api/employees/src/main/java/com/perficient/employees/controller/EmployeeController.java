@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class EmployeeController {
 
     @PostMapping(consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<?> create(@RequestBody() @Valid Employee input) {
+    ResponseEntity<?> create(@RequestBody() @Valid Employee input) throws Exception {
         if (input.getEmpNo() != 0) {
             throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
         }
@@ -49,7 +50,7 @@ public class EmployeeController {
 
     @GetMapping("/{emp_no}")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<?> read(@PathVariable String emp_no) {
+    ResponseEntity<?> read(@PathVariable String emp_no) throws Exception {
         validateEmployee(emp_no);
         List<Employee> response = new ArrayList<>();
         try {
@@ -62,7 +63,7 @@ public class EmployeeController {
 
     @PutMapping(path = "/{emp_no}", consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) {
+    ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) throws Exception {
         validateEmployee(emp_no);
         List<Employee> response = new ArrayList<>();
         try {
@@ -76,7 +77,7 @@ public class EmployeeController {
 
     @DeleteMapping(path = "/{emp_no}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@PathVariable String emp_no) {
+    void delete(@PathVariable String emp_no) throws Exception {
         validateEmployee(emp_no);
         try {
             employeeDAO.delete(emp_no);
@@ -85,7 +86,7 @@ public class EmployeeController {
         }
     }
 
-    private void validateEmployee(String id) {
+    private void validateEmployee(String id) throws Exception {
         try {
             if (this.employeeDAO.show(id).isEmpty()) {
                 throw new EmployeeNotFoundException(id);
