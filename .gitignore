@@ -15,3 +15,4 @@ api/employees/mvnw.cmd
 api/employees/target/*
 api/employees/\.idea/*
 api/employees/employees.iml
+frontend/frontend.iml

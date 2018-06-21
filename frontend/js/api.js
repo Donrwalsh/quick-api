@@ -1,6 +1,38 @@
 $(function () {
     "use strict";
 
+    $('.read').submit(function() {
+        event.preventDefault();
+
+        $.ajax({
+            type: "GET",
+            url: "/employees/employees/" + $('input[name=emp_no]').val(),
+            success: function(res, status, xhr) {
+                if (xhr.status === 200) {
+                    $.each(res, function (i, response) {
+                        var resJSON = "";
+                        if (response === "") {
+                            resJSON = "{Empty Response}";
+                        } else {
+                            resJSON += "<p>";
+                            resJSON += "<strong>Status:</strong> " + xhr.status + "<br />";
+                            resJSON += "<strong>ID:</strong> " + response.empNo + "<br />";
+                            resJSON += "<strong>First Name:</strong> " + response.firstName + "<br />";
+                            resJSON += "<strong>Last Name:</strong> " + response.lastName + "<br />";
+                            resJSON += "<strong>Gender:</strong> " + response.gender + "<br />";
+                            resJSON += "<strong>Birth Date:</strong> " + response.birthDate + "<br />";
+                            resJSON += "<strong>Hire Date:</strong> " + response.hireDate + "<br />";
+                            resJSON += "</p>"
+                        }
+                        $(".output").empty().append(resJSON);
+                    });
+                } else {
+                    alert("failure");
+                }
+            }
+        })
+    });
+
     $('.create').submit(function() {
         event.preventDefault(); //otherwise page reloads
         var formData = {
@@ -20,7 +52,7 @@ $(function () {
             success: function(res, status, xhr) {
                 if (xhr.status === 201) {
                     $.each(res, function (i, response) {
-                       let resJSON = "";
+                       var resJSON = "";
                        if (response === "") {
                            resJSON = "{Empty Response}";
                        } else {
