@@ -45,17 +45,15 @@
 **Employees**
 
 * Would be nice if the debugMessage only shows up in Dev.
-* Currently working on the Update endpoint. -> It is updating birthdate correctly, now to grab other fields and check to see if they actually exist before composing the SQL UPDATE statement.
- --> handle emp_no the same way that the insert endpoint does.
+* CRUD endpoints are functional. Am now working on basic forms for the frontend to consume them.
 
 * Re-imagine the API table above.
 * Inside the Employee object itself, there is a new @JsonCreator annotation that is apparently critical to the test functionality added recently. Need to learn more about what this is actually doing and why it's so structurally important.
 * The current tests are running api calls (actual API calls) against the local database, which could cause problems as the two databases become more and more divergent. This could be fixed by pointing to the dev database, but ultimately tests should be mocking all this nonsense, so expanding the tests to be a little more correctly formed is the proper approach.
 * As of right now, the validation for create calls not containing emp_nos just checks for the default value. This leads to a case where someone can use emp_no=0 with no error. Not a big issue, but would like to solve for completion.
 * Date offset by 1? what?!
-* Manually altered the emp_no column to be auto-increment. I'd like this to be present when I refresh the database as well.
 * Requesting generic input instead of an Employee -> may not be necessary.
-* Revisiting the table, auto-increment, foreign keys -> this was done but not retained.
+* Revisiting the table, auto-increment, foreign keys -> this was done but not retained. -> Had to recreated on prod which is messy.
 * At some point, the hello-world endpoint and test need to go.
 
 #### Developer Environment
@@ -69,4 +67,7 @@
 `#E: Could not open lock file /var/lib/dpkg/lock - open (13: Permission denied)`
 
 `#E: Unable to lock the administration directory (/var/lib/dpkg/), are you root?`
+
+#### Prod Environment
+* Have to use SSH Keys instead of utilizing the password during the script.
 	

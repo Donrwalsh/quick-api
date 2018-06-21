@@ -15,5 +15,3 @@ api/employees/mvnw.cmd
 api/employees/target/*
 api/employees/\.idea/*
 api/employees/employees.iml
-api/employees/src/main/resources/application.properties
-api/employees/src/main/resources/application-dev.properties
