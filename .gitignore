@@ -15,4 +15,12 @@ api/JDBC/mvnw.cmd
 api/JDBC/target/*
 api/JDBC/\.idea/*
 api/JDBC/JDBC.iml
+
+api/JDBC_T/\.mvn/*
+api/JDBC_T/mvnw
+api/JDBC_T/mvnw.cmd
+api/JDBC_T/target/*
+api/JDBC_T/\.idea/*
+api/JDBC_T/JDBC_T.iml
+
 frontend/frontend.iml

@@ -3,7 +3,8 @@
 ## Structure
 
     ├── api                     # Project Folders for API Endpoints
-    |   ├── employees           # MySQL example employees database API.
+    |   ├── JDBC                # MySQL example employees database API. Simple JDBC Implementation
+    |   ├── JDBC_T              # MySQL example employees database API. JDBC Template Implementation
     ├── dev-env                 # Developer environment via vagrant
     ├── frontend                # HTML, js files
     ├── python                  # Utility scripts
@@ -50,9 +51,9 @@
 
 **Employees**
 
-* Would be nice if the debugMessage only shows up in Dev.
-* CRUD endpoints are functional. Am now working on basic forms for the frontend to consume them.
+* As of now, JDBC and JDBC_T exist side-by-side. That means I need to process non-implementation-related changes on both of them. This will quickly get out of hand, and I need to find a way to hopefully automate this, or even just a good way to process shared changes.
 
+* Would be nice if the debugMessage only shows up in Dev.
 * Re-imagine the API table above.
 * Inside the Employee object itself, there is a new @JsonCreator annotation that is apparently critical to the test functionality added recently. Need to learn more about what this is actually doing and why it's so structurally important.
 * The current tests are running api calls (actual API calls) against the local database, which could cause problems as the two databases become more and more divergent. This could be fixed by pointing to the dev database, but ultimately tests should be mocking all this nonsense, so expanding the tests to be a little more correctly formed is the proper approach.
