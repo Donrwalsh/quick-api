@@ -9,10 +9,10 @@ dev-env/dev-box/*
 
 dev-env/quick-api.box
 
-api/employees/\.mvn/*
-api/employees/mvnw
-api/employees/mvnw.cmd
-api/employees/target/*
-api/employees/\.idea/*
-api/employees/employees.iml
+api/JDBC/\.mvn/*
+api/JDBC/mvnw
+api/JDBC/mvnw.cmd
+api/JDBC/target/*
+api/JDBC/\.idea/*
+api/JDBC/JDBC.iml
 frontend/frontend.iml
