@@ -1,5 +1,43 @@
 <!DOCTYPE html>
 <title>Quick API - Employees</title>
+<style>
+    .header {
+        grid-area: header;
+        text-align: center;
+    }
+    .output {
+        grid-area: output;
+    }
+    .create {
+        grid-area: create;
+    }
+    .update {
+        grid-area: update;
+    }
+    .read {
+        grid-area: read;
+    }
+    .delete {
+        grid-area: delete;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-areas:
+                'header header header header header header'
+                'output output create create update update'
+                'output output read read delete delete';
+        grid-gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+    }
+    .grid-container > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        /*text-align: center;*/
+        /*padding: 20px 0;*/
+        /*font-size: 30px;*/
+    }
+</style>
 </head>
 
 <html lang="en">
@@ -8,36 +46,82 @@
 <body>
 
 <div>
-    <h1>Employees</h1>
+    <div class="grid-container">
+        <div class="header">
+            <h1>Employees</h1>
+        </div>
+        <div class="output">
+            <h2 style="text-align:center">Output</h2>
+            <div class="output_content"></div>
+        </div>
+        <div class="create">
+            <h2>Create</h2>
+            <form class="create form">
+                First Name: <br />
+                <input type="text" name="first_name" value="Robert">
+                <br />
+                Last Name: <br />
+                <input type="text" name="last_name" value="Tables">
+                <br />
+                Gender: <br />
+                <input type="text" name="gender" value="M">
+                <br />
+                Birth Date:<br />
+                <input type="text" name="birth_date" value="1997-08-27">
+                <br />
+                Hire Date:<br />
+                <input type="text" name="hire_date" value="2001-01-01">
+                <br />
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="update">
+            <h2>Update</h2>
+            <form class="update form">
+                Employee ID: <br />
+                <input type="number" name="U_emp_no" value="12345">
+                <br />
+                First Name: <br />
+                <input type="text" name="first_name" value="Robert">
+                <br />
+                Last Name: <br />
+                <input type="text" name="last_name" value="Tables">
+                <br />
+                Gender: <br />
+                <input type="text" name="gender" value="M">
+                <br />
+                Birth Date:<br />
+                <input type="text" name="birth_date" value="1997-08-27">
+                <br />
+                Hire Date:<br />
+                <input type="text" name="hire_date" value="2001-01-01">
+                <br />
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="read">
+            <h2>Read</h2>
+            <form class="read form">
+                Employee Id: <br />
+                <input type="number" name="R_emp_no" value="10001">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="delete">
+            <h2>Delete</h2>
+            <form class="delete form">
+                Employee Id: <br />
+                <input type="number" name="D_emp_no" value="10001">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
 </div>
 <div>
-    <div class="output"></div>
-    <h2>Create</h2>
-    <form class="create">
-        First Name: <br />
-        <input type="text" name="first_name" value="Robert">
-        <br />
-        Last Name: <br />
-        <input type="text" name="last_name" value="Tables">
-        <br />
-        Gender: <br />
-        <input type="text" name="gender" value="M">
-        <br />
-        Birth Date:<br />
-        <input type="text" name="birth_date" value="1997-08-27">
-        <br />
-        Hire Date:<br />
-        <input type="text" name="hire_date" value="2001-01-01">
-        <br />
-        <input type="submit" value="Submit">
-    </form>
 
-    <h2>Read</h2>
-    <form class="read">
-        Employee Id: <br />
-        <input type="number" name="emp_no" value="10001">
-        <input type="submit" value="Submit">
-    </form>
+
+
+
 </div>
 <script
         src="http://code.jquery.com/jquery-3.3.1.min.js"

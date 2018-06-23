@@ -40,6 +40,12 @@
 
 ## TODOs
 
+#### Frontend
+
+* Had to awkwardly select emp_no by designating type of endpoint with a capital char at the start of the class, otherwise it will always pick the first 'emp_no' input element. There's gotta be a more elegant way to do this.
+* DELETE endpoint returns no response + status of 204, which I guess is correct, but there's no output to show. That's weird and I'd like a better confirmation that the delete was actually processed.
+* If something goes wrong it throws a simple 'failure' alert. Need better error handling.
+
 #### APIs
 
 **Employees**
