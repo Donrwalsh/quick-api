@@ -1,7 +1,6 @@
 package com.perficient.employees.error;
 
 import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import com.perficient.employees.exception.DatabaseException;
 import com.perficient.employees.exception.EmployeeNotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

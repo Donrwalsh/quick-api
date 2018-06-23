@@ -3,9 +3,7 @@ package com.perficient.employees.controller;
 import com.perficient.employees.dao.EmployeeDAO;
 import com.perficient.employees.exception.DatabaseException;
 import com.perficient.employees.exception.EmployeeNotFoundException;
-import com.perficient.employees.exception.UnhandledException;
 import com.perficient.employees.model.Employee;
-import com.perficient.employees.exception.DatabaseConnectionException;
 import com.perficient.employees.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 

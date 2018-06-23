@@ -1,12 +1,12 @@
 package com.perficient.employees.service;
 
-import com.perficient.employees.exception.DatabaseConnectionException;
-import com.perficient.employees.exception.DatabaseException;
-import com.perficient.employees.exception.UnhandledException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @Service
 public class DatabaseService {
