@@ -8,14 +8,14 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @EnableAutoConfiguration
 @SpringBootApplication
-public class EmployeesApplication extends SpringBootServletInitializer {
+public class JDBCApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(EmployeesApplication.class);
+        return application.sources(JDBCApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(EmployeesApplication.class, args);
+        SpringApplication.run(JDBCApplication.class, args);
     }
 }

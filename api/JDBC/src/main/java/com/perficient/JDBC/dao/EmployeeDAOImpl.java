@@ -17,7 +17,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<Employee> show(String id) throws Exception {
         ResultSet response =databaseService.performQuery(
-                "SELECT * FROM JDBC where emp_no = " + id);
+                "SELECT * FROM employees where emp_no = " + id);
         List<Employee> result = new ArrayList<>();
         while (response.next()) {
             Employee responseEmployee = new Employee(
@@ -36,7 +36,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public int create(Employee input) throws Exception {
         return databaseService.performUpdate(
-                "INSERT INTO JDBC (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES (" +
+                "INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES (" +
                         input.getEmpNo() + "," +
                         "'" + input.getBirthDate() + "', " +
                         "'" + input.getFirstName() + "', " +
@@ -57,7 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         updates.add(input.getGender() == null ? null : "gender = '" + input.getGender() + "'");
         updates.add(input.getHireDate() == null ? null : "hire_date = '" + input.getHireDate() + "'");
 
-        String query  = "UPDATE JDBC SET ";
+        String query  = "UPDATE employees SET ";
         for (Object object: updates) {
             if (object != null) {
                 if (toggle) {
@@ -73,7 +73,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void delete(String emp_no) throws Exception {
-        databaseService.performUpdate("DELETE FROM JDBC WHERE emp_no = " + emp_no);
+        databaseService.performUpdate("DELETE FROM employees WHERE emp_no = " + emp_no);
     }
 
 }
