@@ -13,6 +13,8 @@
 
 OG todo is getting out of hand. These are primary action items:
 
+* CI/CD, Jenkins, Artifactery, Ansible
+
 * Kill the Python folder.
 * Organize the readme.
 * Kill prod_deploy.sh

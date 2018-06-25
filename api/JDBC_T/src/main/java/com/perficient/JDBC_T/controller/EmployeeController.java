@@ -25,24 +25,24 @@ public class EmployeeController {
     @Autowired
     private ExceptionService exceptionService;
 
-//    @PostMapping(consumes="application/json")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    ResponseEntity<?> create(@RequestBody() @Valid Employee input) throws Exception {
-//        if (input.getEmpNo() != 0) {
-//            throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
-//        }
-//        List<Employee> response = new ArrayList<>();
-//        URI location;
-//        int createdID = 0;
-//        try {
-//            createdID = employeeDAO.create(input);
-//            response = employeeDAO.show(Integer.toString(createdID));
-//        } catch (Exception e) {
-//            exceptionService.toss(e);
-//        }
-//        location = URI.create("http://www.quick-api.com/JDBC_T/JDBC_T/" + createdID);
-//        return ResponseEntity.created(location).body(response);
-//    }
+    @PostMapping(consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<?> create(@RequestBody() @Valid Employee input) throws Exception {
+        if (input.getEmpNo() != 0) {
+            throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
+        }
+        List<Employee> response = new ArrayList<>();
+        URI location;
+        int createdID = 0;
+        try {
+            createdID = employeeDAO.create(input);
+            response = employeeDAO.show(Integer.toString(createdID));
+        } catch (Exception e) {
+            exceptionService.toss(e);
+        }
+        location = URI.create("http://www.quick-api.com/JDBC_T/JDBC_T/" + createdID);
+        return ResponseEntity.created(location).body(response);
+    }
 
     @GetMapping("/{emp_no}")
     @ResponseStatus(HttpStatus.OK)

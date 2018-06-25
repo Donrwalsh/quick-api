@@ -3,11 +3,13 @@ package com.perficient.JDBC_T.dao;
 import com.perficient.JDBC_T.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.inject.Named;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Named
@@ -21,9 +23,39 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private static final String GET_EMPLOYEE_BY_ID = "SELECT * FROM `employees` WHERE emp_no = ?";
 
+    private static final String CREATE_EMPLOYEE = "INSERT INTO employees " +
+            "(birth_date, first_name, last_name, gender, hire_date) VALUES (?, ?, ?, ?, ?) ";
+
     @Override
     public List<Employee> show(String id) throws Exception {
         return jdbcTemplate.query(GET_EMPLOYEE_BY_ID, new EmployeeMapper(), id);
+    }
+
+    @Override
+    public int create(Employee input) throws Exception {
+        GeneratedKeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement statement = con.prepareStatement(CREATE_EMPLOYEE, Statement.RETURN_GENERATED_KEYS);
+                statement.setDate(1, input.getBirthDate());
+                statement.setString(2, input.getFirstName());
+                statement.setString(3, input.getLastName());
+                statement.setString(4, input.getGender());
+                statement.setDate(5, input.getHireDate());
+                return statement;
+            }
+        }, holder);
+
+        return holder.getKey().intValue();
+
+//        KeyHolder keyHolder = new GeneratedKeyHolder();
+//        Object[] params = new Object[] { input.getBirthDate(), input.getFirstName(),
+//                input.getLastName(), input.getGender(), input.getHireDate() };
+//        return jdbcTemplate.update(CREATE_EMPLOYEE, input.getBirthDate(), input.getFirstName(),
+//                input.getLastName(), input.getGender(), input.getHireDate());
+
+        //return keyHolder.getKey().intValue();
     }
 
     private static final class EmployeeMapper implements RowMapper<Employee> {
@@ -42,7 +74,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             return employee;
         }
     }
-//
+
 //    @Override
 //    public int create(Employee input) throws Exception {
 //        return databaseService.performUpdate(
@@ -55,7 +87,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 //                        "'" + input.getHireDate() + "');"
 //        );
 //    }
-//
+
 //    @Override
 //    public void update(String emp_no, Employee input) throws Exception {
 //        boolean toggle = false;
