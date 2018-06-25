@@ -21,18 +21,17 @@ elif [[ "$api" =~ ^(employees|e)$ ]]; then
 	api=employees
 fi
 
-if [ -z "$impl" ]; then impl=all; fi
+if [ -z "$impl" ]; then impl=none; fi
 
-if [ \( "$api" = "employees" \) -a \( "$impl" -a "$impl" != "jdbc" -a "$impl" != "jdbc_t" \) -a \( "$impl" != "all" \) ]; then
+if [ \( "$api" = "employees" \) -a \( "$impl" != "jdbc" -a "$impl" != "jdbc_t" \) -a \( "$impl" != "all" -a "$impl" != "none" \) ]; then
 	echo -e "ERROR: Invalid Implementation Argument: $api/$impl.\n$usage"
 	exit 1
 fi
 
 echo -e "[ENV:$env] [API:$api] [IMPL:$impl]\n"
 
-#--- File Preparer
-rm -rfv staging/*
-mkdir -pv staging/frontend
+# #--- File Preparer
+rm -rfv staging/frontend/*
 cp -rv frontend/* staging/frontend/
 
 if [ "$impl" == "jdbc" -o "$impl" == "all" ]; then
@@ -46,28 +45,17 @@ if [ "$impl" == "jdbc_t" -o "$impl" == "all" ]; then
 fi
 
 #--- File Migrater
+if [ "$env" == "dev" -o "$env" == "all" ]; then
+	cd dev-env
+	vagrant ssh -c "sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
+					sudo cp -rv /scratch/frontend/* /var/lib/tomcat8/webapps/ROOT/;
+					sudo cp -rv /scratch/*.war /var/lib/tomcat8/webapps/;"
+	cd ../
+fi
 
-#If environment is dev...
-cd dev-env
-vagrant ssh -c "sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
-				sudo cp -rv /scratch/frontend/* /var/lib/tomcat8/webapps/ROOT/;
-				sudo cp -rv /scratch/*.war /var/lib/tomcat8/webapps/;"
-
-
-#rename dev-box to 'staging' or something else environment-agnostic
-
-
-
-
-
-
-#mvn package -f ../api/JDBC/pom.xml -Dmaven.test.skip=true
-#mvn package -f ../api/JDBC_T/pom.xml -Dmaven.test.skip=true
-#cp ../api/JDBC/target/JDBC-0.0.1-SNAPSHOT.war.original dev-box/JDBC.war
-#cp ../api/JDBC_T/target/JDBC_T-0.0.1-SNAPSHOT.war.original dev-box/JDBC_T.war
-#vagrant ssh -c "sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
-#				sudo cp -rv /scratch/frontend/* /var/lib/tomcat8/webapps/ROOT/;
-#				sudo cp -rv /scratch/*.war /var/lib/tomcat8/webapps/;"
-				
-				
-#Next thing is options to build specific implementations.'
+if [ "$env" == "prod" -o "$env" == "all" ]; then
+	scp -r staging/* deploy@quick-api.com:/home/deploy
+	ssh -t deploy@quick-api.com "sudo cp -rv /home/deploy/frontend/* /var/lib/tomcat8/webapps/ROOT/;
+		sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
+		sudo cp -rv /home/deploy/*.war /var/lib/tomcat8/webapps/ ;"
+fi
