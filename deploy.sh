@@ -55,7 +55,7 @@ fi
 
 if [ "$env" == "prod" -o "$env" == "all" ]; then
 	scp -r staging/* deploy@quick-api.com:/home/deploy
-	ssh -t deploy@quick-api.com "sudo cp -rv /home/deploy/frontend/* /var/lib/tomcat8/webapps/ROOT/;
-		sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
+	ssh -t deploy@quick-api.com "sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
+		sudo cp -rv /home/deploy/frontend/* /var/lib/tomcat8/webapps/ROOT/;
 		sudo cp -rv /home/deploy/*.war /var/lib/tomcat8/webapps/ ;"
 fi
