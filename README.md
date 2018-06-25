@@ -8,6 +8,16 @@
     ├── dev-env                 # Developer environment via vagrant
     ├── frontend                # HTML, js files
     ├── python                  # Utility scripts
+
+## TODO:
+
+OG todo is getting out of hand. These are primary action items:
+
+* Kill the Python folder.
+* Organize the readme.
+* Kill prod_deploy.sh
+
+* RE: deploy.sh decide what to do with verbosity.
 	
 ## Notes
 

@@ -3,7 +3,8 @@ venv
 identity.py
 python/__pycache__/*
 dev-env/.vagrant/*
-dev-env/dev-box/*
+
+staging/*
 
 
 

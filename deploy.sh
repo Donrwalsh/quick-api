@@ -30,25 +30,35 @@ fi
 
 echo -e "[ENV:$env] [API:$api] [IMPL:$impl]\n"
 
-if [ "$env" = "prod" -o "$env" = "all" ]; then
-	echo "Prod deploy is unavailable at this time"
+#--- File Preparer
+rm -rfv staging/*
+mkdir -pv staging/frontend
+cp -rv frontend/* staging/frontend/
+
+if [ "$impl" == "jdbc" -o "$impl" == "all" ]; then
+	mvn clean package -f api/JDBC/pom.xml -Dmaven.test.skip=true
+	cp -rv api/JDBC/target/JDBC-0.0.1-SNAPSHOT.war staging/JDBC.war
 fi
 
-#--- File Preparer
-#Frontend
-#Selective Maven Packaging
-#Populating dev-box or whatever folder
+if [ "$impl" == "jdbc_t" -o "$impl" == "all" ]; then
+	mvn clean package -f api/JDBC_T/pom.xml -Dmaven.test.skip=true
+	cp -rv api/JDBC_T/target/JDBC_T-0.0.1-SNAPSHOT.war staging/JDBC_T.war
+fi
 
 #--- File Migrater
 
-#--- Tester?
+#If environment is dev...
+cd dev-env
+vagrant ssh -c "sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*;
+				sudo cp -rv /scratch/frontend/* /var/lib/tomcat8/webapps/ROOT/;
+				sudo cp -rv /scratch/*.war /var/lib/tomcat8/webapps/;"
+
 
 #rename dev-box to 'staging' or something else environment-agnostic
 
 
-#rm -rfv dev-box/*
-#mkdir -p dev-box/frontend
-#cp ../frontend/* dev-box/frontend/ -rv
+
+
 
 
 #mvn package -f ../api/JDBC/pom.xml -Dmaven.test.skip=true
