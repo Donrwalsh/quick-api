@@ -13,11 +13,6 @@ pipeline {
 				}
             }
         }
-		post {
-			always {
-				archiveArtifacts artifacts: 'build/libs/**/*.war', fingerprint:true
-			}
-		}
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -29,4 +24,9 @@ pipeline {
             }
         }
     }
+	post {
+			always {
+				archiveArtifacts artifacts: 'build/libs/**/*.war', fingerprint:true
+			}
+		}
 }
