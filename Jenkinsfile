@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh 'ssh vagrant@vagrant rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
+				sh 'ssh vagrant@192.168.33.10 rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
             }
         }
     }
