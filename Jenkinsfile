@@ -9,10 +9,10 @@ pipeline {
             steps {
                 echo 'Building..'
 				dir("api/JDBC") {
-					sh 'mvn clean package -Dmaven.test.skip=true'
+					Cygwin 'mvn clean package -Dmaven.test.skip=true'
 				}
 				dir("api/JDBC_T") {
-					sh 'mvn clean package -Dmaven.test.skip=true'
+					Cygwin 'mvn clean package -Dmaven.test.skip=true'
 				}
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh 'ssh vagrant@vagrant rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
+				Cygwin 'ssh vagrant@vagrant rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
             }
         }
     }
