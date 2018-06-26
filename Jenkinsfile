@@ -9,7 +9,7 @@ pipeline {
             steps {
                 echo 'Building..'
 				dir("api/JDBC") {
-					sh 'mvn clean package -Dmaven.test.skip=true'
+					bat 'mvn clean package -Dmaven.test.skip=true'
 				}
             }
         }
