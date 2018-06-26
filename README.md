@@ -13,7 +13,8 @@
 
 OG todo is getting out of hand. These are primary action items:
 
-* CI/CD, Jenkins, Artifactery, Ansible
+* CI/CD, Jenkins, Artifactery, Ansible, 
+* Docker, Kubernetes, 
 
 * Kill the Python folder.
 * Organize the readme.
@@ -62,6 +63,9 @@ OG todo is getting out of hand. These are primary action items:
 #### APIs
 
 **Employees**
+
+* JDBC_T create DAO, maybe simpler syntax.
+* JDBC_T and JDBC different handling of errors on empty PUT call. Why?
 
 * As of now, JDBC and JDBC_T exist side-by-side. That means I need to process non-implementation-related changes on both of them. This will quickly get out of hand, and I need to find a way to hopefully automate this, or even just a good way to process shared changes.
 

@@ -57,19 +57,19 @@ public class EmployeeController {
         return ResponseEntity.ok().body(response);
     }
 
-//    @PutMapping(path = "/{emp_no}", consumes="application/json")
-//    @ResponseStatus(HttpStatus.OK)
-//    ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) throws Exception {
-//        validateEmployee(emp_no);
-//        List<Employee> response = new ArrayList<>();
-//        try {
-//            employeeDAO.update(emp_no, input);
-//            response = employeeDAO.show(emp_no);
-//        } catch (Exception e) {
-//            exceptionService.toss(e);
-//        }
-//        return ResponseEntity.ok().body(response);
-//    }
+    @PutMapping(path = "/{emp_no}", consumes="application/json")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<?> update(@PathVariable String emp_no, @RequestBody() Employee input) throws Exception {
+        validateEmployee(emp_no);
+        List<Employee> response = new ArrayList<>();
+        try {
+            employeeDAO.update(emp_no, input);
+            response = employeeDAO.show(emp_no);
+        } catch (Exception e) {
+            exceptionService.toss(e);
+        }
+        return ResponseEntity.ok().body(response);
+    }
 //
 //    @DeleteMapping(path = "/{emp_no}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

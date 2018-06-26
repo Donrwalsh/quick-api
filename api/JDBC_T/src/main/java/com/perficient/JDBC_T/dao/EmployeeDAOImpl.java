@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import javax.inject.Named;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -25,6 +26,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private static final String CREATE_EMPLOYEE = "INSERT INTO employees " +
             "(birth_date, first_name, last_name, gender, hire_date) VALUES (?, ?, ?, ?, ?) ";
+
+    private static String UPDATE_EMPLOYEE = "UPDATE employees SET ";
 
     @Override
     public List<Employee> show(String id) throws Exception {
@@ -48,14 +51,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }, holder);
 
         return holder.getKey().intValue();
-
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        Object[] params = new Object[] { input.getBirthDate(), input.getFirstName(),
-//                input.getLastName(), input.getGender(), input.getHireDate() };
-//        return jdbcTemplate.update(CREATE_EMPLOYEE, input.getBirthDate(), input.getFirstName(),
-//                input.getLastName(), input.getGender(), input.getHireDate());
-
-        //return keyHolder.getKey().intValue();
     }
 
     private static final class EmployeeMapper implements RowMapper<Employee> {
@@ -75,43 +70,51 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
-//    @Override
-//    public int create(Employee input) throws Exception {
-//        return databaseService.performUpdate(
-//                "INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES (" +
-//                        input.getEmpNo() + "," +
-//                        "'" + input.getBirthDate() + "', " +
-//                        "'" + input.getFirstName() + "', " +
-//                        "'" + input.getLastName() + "', " +
-//                        "'" + input.getGender() + "', " +
-//                        "'" + input.getHireDate() + "');"
-//        );
-//    }
+    @Override
+    public void update(String emp_no, Employee input) throws Exception {
+        String query = UPDATE_EMPLOYEE;
+        boolean toggle = false;
 
-//    @Override
-//    public void update(String emp_no, Employee input) throws Exception {
-//        boolean toggle = false;
-//
-//        List<Object> updates = new ArrayList<>();
-//        updates.add(input.getBirthDate() == null ? null : "birth_date = '" + input.getBirthDate() + "'");
-//        updates.add(input.getFirstName() == null ? null : "first_name = '" + input.getFirstName() + "'");
-//        updates.add(input.getLastName() == null ? null : "last_name = '" + input.getLastName() + "'");
-//        updates.add(input.getGender() == null ? null : "gender = '" + input.getGender() + "'");
-//        updates.add(input.getHireDate() == null ? null : "hire_date = '" + input.getHireDate() + "'");
-//
-//        String query  = "UPDATE employees SET ";
-//        for (Object object: updates) {
-//            if (object != null) {
-//                if (toggle) {
-//                    query += ", ";
-//                }
-//                query += object;
-//                toggle = true;
-//            }
-//        }
-//        query += " WHERE emp_no = " + emp_no;
-//        databaseService.performUpdate(query);
-//    }
+        List<Object> updates = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+
+        if (input.getBirthDate() != null) {
+            updates.add("birth_date = ?");
+            params.add(input.getBirthDate());
+        }
+        if (input.getFirstName() != null) {
+            updates.add("first_name = ?");
+            params.add(input.getFirstName());
+        }
+        if (input.getLastName() != null) {
+            updates.add("last_name = ?");
+            params.add(input.getLastName());
+        }
+        if (input.getGender() != null) {
+            updates.add("gender = ?");
+            params.add(input.getGender());
+        }
+        if (input.getHireDate() != null) {
+            updates.add("hire_date = ?");
+            params.add(input.getHireDate());
+        }
+        params.add(emp_no);
+
+        Object[] array = new Object[params.size()];
+        for (int i = 0; i < params.size(); i++) {
+            array[i] = params.get(i);
+        }
+
+        for (Object object: updates) {
+            if (toggle) {
+                query += ", ";
+            }
+            query += object;
+            toggle = true;
+        }
+        query += " WHERE emp_no = ?";
+        jdbcTemplate.update(query, array);
+    }
 //
 //    @Override
 //    public void delete(String emp_no) throws Exception {
