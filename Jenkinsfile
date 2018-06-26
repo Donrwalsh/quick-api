@@ -24,6 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+				bat 'ssh vagrant@vagrant rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
             }
         }
     }
