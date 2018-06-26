@@ -8,7 +8,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-				sh 'mvn clean package -f api/JDBC/pom.xml -Dmaven.test.skip=true'
+				dir("api/JDBC") {
+					sh 'mvn clean package -Dmaven.test.skip=true'
+				}
             }
         }
         stage('Test') {
