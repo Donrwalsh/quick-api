@@ -11,6 +11,9 @@ pipeline {
 				dir("api/JDBC") {
 					bat 'mvn clean package -Dmaven.test.skip=true'
 				}
+				dir("api/JDBC_T") {
+					bat 'mvn clean package -Dmaven.test.skip=true'
+				}
             }
         }
         stage('Test') {
