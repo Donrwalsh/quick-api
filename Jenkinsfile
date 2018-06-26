@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh 'ssh -o StrictHostKeyChecking=no jenkins@192.168.33.10  rm -rfv /var/lib/tomcat8/webapps/ROOT/*';
+				sh "ssh -o StrictHostKeyChecking=no jenkins@192.168.33.10 'sudo rm -rfv /var/lib/tomcat8/webapps/ROOT/*'";
             }
         }
     }
