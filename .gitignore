@@ -24,4 +24,11 @@ api/JDBC_T/target/*
 api/JDBC_T/\.idea/*
 api/JDBC_T/JDBC_T.iml
 
+api/test/\.mvn/*
+api/test/mvnw
+api/test/mvnw.cmd
+api/test/target/*
+api/test/\.idea/*
+api/test/test.iml
+
 frontend/frontend.iml
