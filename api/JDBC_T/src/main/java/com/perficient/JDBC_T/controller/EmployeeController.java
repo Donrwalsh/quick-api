@@ -70,17 +70,17 @@ public class EmployeeController {
         }
         return ResponseEntity.ok().body(response);
     }
-//
-//    @DeleteMapping(path = "/{emp_no}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    void delete(@PathVariable String emp_no) throws Exception {
-//        validateEmployee(emp_no);
-//        try {
-//            employeeDAO.delete(emp_no);
-//        } catch (Exception e) {
-//            exceptionService.toss(e);
-//        }
-//    }
+
+    @DeleteMapping(path = "/{emp_no}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable String emp_no) throws Exception {
+        validateEmployee(emp_no);
+        try {
+            employeeDAO.delete(emp_no);
+        } catch (Exception e) {
+            exceptionService.toss(e);
+        }
+    }
 
     private void validateEmployee(String id) throws Exception {
         try {
