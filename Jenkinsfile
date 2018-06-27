@@ -24,7 +24,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh './deploy.sh all e all'
             }
         }
     }
