@@ -2,23 +2,18 @@
 
 ## Structure
 
-    ├── api                     # Project Folders for API Endpoints
-    |   ├── JDBC                # MySQL example employees database API. Simple JDBC Implementation
-    |   ├── JDBC_T              # MySQL example employees database API. JDBC Template Implementation
+    ├── api                     # API Endpoints
+    |   ├── JDBC                # Simple JDBC CRUD API Implementation
+    |   ├── JDBC_T              # JDBC Template CRUD API Implementation
     ├── dev-env                 # Developer environment via vagrant
     ├── frontend                # HTML, js files
-    ├── python                  # Utility scripts
 
 ## TODO:
-
-OG todo is getting out of hand. These are primary action items:
 
 * CI/CD, Jenkins, Artifactery, Ansible, 
 * Docker, Kubernetes, 
 
-* Kill the Python folder.
 * Organize the readme.
-* Kill prod_deploy.sh
 
 * RE: deploy.sh decide what to do with verbosity.
 	
