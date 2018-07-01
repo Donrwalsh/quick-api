@@ -29,13 +29,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private static String UPDATE_EMPLOYEE = "UPDATE employees SET ";
 
+    private static final String DELETE_EMPLOYEE_BY_ID = "DELETE FROM employees WHERE emp_no = ?";
+
     @Override
-    public List<Employee> show(String id) throws Exception {
+    public List<Employee> show(String id) {
         return jdbcTemplate.query(GET_EMPLOYEE_BY_ID, new EmployeeMapper(), id);
     }
 
     @Override
-    public int create(Employee input) throws Exception {
+    public int create(Employee input) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -53,25 +55,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return holder.getKey().intValue();
     }
 
-    private static final class EmployeeMapper implements RowMapper<Employee> {
-
-        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            Employee employee = new Employee(
-                    rs.getInt("emp_no"),
-                    rs.getDate("birth_date"),
-                    rs.getString("first_name"),
-                    rs.getString("last_name"),
-                    rs.getString("gender"),
-                    rs.getDate("hire_date")
-            );
-
-            return employee;
-        }
-    }
-
     @Override
-    public void update(String emp_no, Employee input) throws Exception {
+    public void update(String id, Employee input) {
         String query = UPDATE_EMPLOYEE;
         boolean toggle = false;
 
@@ -98,7 +83,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             updates.add("hire_date = ?");
             params.add(input.getHireDate());
         }
-        params.add(emp_no);
+        params.add(id);
 
         Object[] array = new Object[params.size()];
         for (int i = 0; i < params.size(); i++) {
@@ -115,10 +100,27 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         query += " WHERE emp_no = ?";
         jdbcTemplate.update(query, array);
     }
-//
-//    @Override
-//    public void delete(String emp_no) throws Exception {
-//        databaseService.performUpdate("DELETE FROM employees WHERE emp_no = " + emp_no);
-//    }
+
+    @Override
+    public void delete(String id) {
+        jdbcTemplate.update(DELETE_EMPLOYEE_BY_ID, id);
+    }
+
+    private static final class EmployeeMapper implements RowMapper<Employee> {
+
+        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            Employee employee = new Employee(
+                    rs.getInt("emp_no"),
+                    rs.getDate("birth_date"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getString("gender"),
+                    rs.getDate("hire_date")
+            );
+
+            return employee;
+        }
+    }
 
 }
