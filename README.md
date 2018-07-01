@@ -36,6 +36,4 @@ Currently all APIs work with 'Employees' data.
 * Unit tests?
 * API Documentation
 * JDBC_T and JDBC different handling of errors on empty PUT call. Why?
-
-
 	
