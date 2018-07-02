@@ -1,4 +1,4 @@
-function() {
+function () {
     var config = {
         apiURL: 'http://quick-api-dev.com:8080'
     };
