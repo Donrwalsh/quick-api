@@ -1,9 +1,9 @@
 Feature: Developer Environment Employee CRUD Endpoints
 
 Background:
-  * def URL = 'http://quick-api-dev.com:8080/JDBC/employees/'
+  * def URL = 'http://quick-api:8080/JDBC_T/employees/'
 
-  Scenario: Simple CRUD Validation
+  Scenario: Simple JDBC_T CRUD Validation
 
     Given url URL
     And request {"gender":"M","birth_date":"1987-10-22","last_name":"Tables","hire_date":"2001-01-01","first_name":"Robert"}
