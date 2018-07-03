@@ -1,4 +1,4 @@
-package feature.JDBC;
+package feature;
 
 import com.intuit.karate.cucumber.CucumberRunner;
 import com.intuit.karate.cucumber.KarateStats;
@@ -21,7 +21,7 @@ public class TestParallel {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-//        JDBCTest.beforeClass();
+//        JDBC_TTest.beforeClass();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TestParallel {
         Collection<File> jsonFiles = FileUtils.listFiles(new File(karateOutputPath), new String[] {"json"}, true);
         List<String> jsonPaths = new ArrayList(jsonFiles.size());
         jsonFiles.forEach(file -> jsonPaths.add(file.getAbsolutePath()));
-        Configuration config = new Configuration(new File("target"), "JDBC");
+        Configuration config = new Configuration(new File("target"), "feature");
         ReportBuilder reportBuilder = new ReportBuilder(jsonPaths, config);
         reportBuilder.generateReports();
     }
