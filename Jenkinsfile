@@ -23,7 +23,9 @@ pipeline {
             steps {
 				echo 'Deploying....'
 				node ('stage') {
+				dir('var/lib/tomcat8/webapps/') {
 					unstash "JDBC"
+					}
 				}
             }
         }
