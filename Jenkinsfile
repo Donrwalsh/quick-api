@@ -12,6 +12,7 @@ pipeline {
 				
 				dir("api/JDBC") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
+					stash includes: 'target/JDBC.war', name: 'JDBC'
 				}
 				dir("api/JDBC_T") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
@@ -22,7 +23,7 @@ pipeline {
             steps {
 				echo 'Deploying....'
 				node ('stage') {
-					sh 'echo potato'
+					unstash "JDBC"
 				}
             }
         }
