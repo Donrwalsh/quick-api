@@ -24,7 +24,7 @@ pipeline {
         stage('Test') {
             steps {
 				dir("api/test") {
-					sh 'mvn clean test'
+					sh 'mvn clean test -DargLine="-Dkarate.env=stg"'
 				}
                 echo 'Testing..'
             }

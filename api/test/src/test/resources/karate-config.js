@@ -1,6 +1,12 @@
 function() {
+    var env = karate.env;
+    if (env = 'dev') {
+        var apiURL = 'http://quick-api-dev.com:8080'
+    } else if (env = 'stg') {
+        var apiURL = 'http://localhost:8081'
+    }
     var config = {
-        apiURL: 'http://quick-api-dev.com:8080'
+        apiURL: apiURL
     };
 
     karate.configure('connectTimeout', 5000);
