@@ -10,15 +10,20 @@ pipeline {
                 echo 'Building..'
 				dir("api/JDBC") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
+					sh 'cp target/JDBC.war ~/Desktop/stage'
 				}
 				dir("api/JDBC_T") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
+					sh 'cp target/JDBC_T.war ~/Desktop/stage'
 				}
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+				echo 'Deploying....'
+				dir("~/Desktop/stage") {
+					sh 'vagrant 
+                
             }
         }
         stage('Test') {
