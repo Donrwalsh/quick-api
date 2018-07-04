@@ -1,8 +1,8 @@
 function() {
     var env = karate.env;
-    if (env = 'dev') {
+    if (env == 'dev') {
         var apiURL = 'http://quick-api-dev.com:8080'
-    } else if (env = 'stg') {
+    } else if (env == 'stg') {
         var apiURL = 'http://localhost:8081'
     }
     var config = {
