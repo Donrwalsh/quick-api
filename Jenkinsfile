@@ -18,6 +18,8 @@ pipeline {
 				}
 				dir("api/JDBC_T") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
+					dir("target") {
+						stash includes: 'JDBC_T.war', name: 'JDBC_T'
 				}
             }
         }
@@ -27,6 +29,7 @@ pipeline {
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
 					unstash "JDBC"
+					unstash "JDBC_T"
 					}
 				}
             }
