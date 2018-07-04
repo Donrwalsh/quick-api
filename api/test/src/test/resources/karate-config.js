@@ -3,7 +3,7 @@ function() {
     if (env == 'dev') {
         var apiURL = 'http://quick-api-dev.com:8080'
     } else if (env == 'stg') {
-        var apiURL = 'http://localhost:8081'
+        var apiURL = 'http://192.168.33.10:8080'
     }
     var config = {
         apiURL: apiURL
