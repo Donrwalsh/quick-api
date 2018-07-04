@@ -4,10 +4,7 @@ pipeline {
 		maven 'Maven 3.5.4'
 		jdk 'JDK8'
 	}
-	node {
-		stage 'Trying out nodes'
-		sh 'echo potato'
-	}
+
     stages {
         stage('Build') {
             steps {
@@ -24,6 +21,10 @@ pipeline {
         stage('Deploy') {
             steps {
 				echo 'Deploying....'
+				node ('stage') {
+					stage 'Trying out nodes'
+					sh 'echo potato'
+				}
             }
         }
         stage('Test') {
