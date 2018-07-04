@@ -36,12 +36,12 @@ cp -rv frontend/* staging/frontend/
 
 if [ "$impl" == "jdbc" -o "$impl" == "all" ]; then
 	mvn clean package -f api/JDBC/pom.xml -Dmaven.test.skip=true
-	cp -rv api/JDBC/target/JDBC-0.0.1-SNAPSHOT.war staging/JDBC.war
+	cp -rv api/JDBC/target/JDBC.war staging/JDBC.war
 fi
 
 if [ "$impl" == "jdbc_t" -o "$impl" == "all" ]; then
 	mvn clean package -f api/JDBC_T/pom.xml -Dmaven.test.skip=true
-	cp -rv api/JDBC_T/target/JDBC_T-0.0.1-SNAPSHOT.war staging/JDBC_T.war
+	cp -rv api/JDBC_T/target/JDBC_T.war staging/JDBC_T.war
 fi
 
 #--- File Migrater
