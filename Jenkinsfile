@@ -27,13 +27,13 @@ pipeline {
         stage('Deploy') {
             steps {
 				echo 'Deploying....'
-				sleep 30
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
 					unstash "JDBC"
 					unstash "JDBC_T"
 					}
 				}
+				sleep 30
             }
         }
         stage('Test') {
