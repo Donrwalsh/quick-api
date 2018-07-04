@@ -13,7 +13,7 @@ pipeline {
 				dir("api/JDBC") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
 					dir("target") {
-						stash includes: 'target/JDBC.war', name: 'JDBC'
+						stash includes: 'JDBC.war', name: 'JDBC'
 					}
 				}
 				dir("api/JDBC_T") {
