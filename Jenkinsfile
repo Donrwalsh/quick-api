@@ -21,9 +21,6 @@ pipeline {
         stage('Deploy') {
             steps {
 				echo 'Deploying....'
-				dir("~/Desktop/stage") {
-					sh 'vagrant 
-                
             }
         }
         stage('Test') {
