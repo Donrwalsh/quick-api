@@ -4,17 +4,20 @@ pipeline {
 		maven 'Maven 3.5.4'
 		jdk 'JDK8'
 	}
+	node {
+		stage 'Trying out nodes'
+		sh 'echo potato'
+	}
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
+				
 				dir("api/JDBC") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
-					sh 'cp target/JDBC.war /Users/boss/Desktop/stage'
 				}
 				dir("api/JDBC_T") {
 					sh 'mvn clean package -Dmaven.test.skip=true'
-					sh 'cp target/JDBC_T.war Users/boss/Desktop/stage'
 				}
             }
         }
