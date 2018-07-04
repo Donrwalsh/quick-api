@@ -21,7 +21,7 @@ public class TestParallel {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-//        JDBC_TTest.beforeClass();
+//        JDBCTTest.beforeClass();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TestParallel {
         Collection<File> jsonFiles = FileUtils.listFiles(new File(karateOutputPath), new String[] {"json"}, true);
         List<String> jsonPaths = new ArrayList(jsonFiles.size());
         jsonFiles.forEach(file -> jsonPaths.add(file.getAbsolutePath()));
-        Configuration config = new Configuration(new File("target"), "feature");
+        Configuration config = new Configuration(new File("target"), "test");
         ReportBuilder reportBuilder = new ReportBuilder(jsonPaths, config);
         reportBuilder.generateReports();
     }

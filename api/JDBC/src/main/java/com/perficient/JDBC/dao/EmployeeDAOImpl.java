@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.perficient.JDBC.service.DatabaseService;
 import javax.inject.Named;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +25,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         while (response.next()) {
             Employee responseEmployee = new Employee(
                     response.getInt("emp_no"),
-                    response.getDate("birth_date"),
+                    LocalDate.parse(response.getString("birth_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                     response.getString("first_name"),
                     response.getString("last_name"),
                     response.getString("gender"),
-                    response.getDate("hire_date")
+                    LocalDate.parse(response.getString("hire_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             );
             result.add(responseEmployee);
         }

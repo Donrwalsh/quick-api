@@ -75,9 +75,9 @@
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <includes>
-                        <include>feature/JDBC/TestParallel.java</include>
+                        <include>feature/TestParallel.java</include>
                         <include>feature/JDBC/*Test.java</include>
-                        <include>feature/JDBC_T/*Test.java</include>
+                        <include>feature/JDBCT/*Test.java</include>
                         <!--<include>mock/contract/*Test.java</include>-->
                         <!--<include>mock/micro/*Runner.java</include>-->
                         <!--<include>mock/proxy/*Runner.java</include>-->
