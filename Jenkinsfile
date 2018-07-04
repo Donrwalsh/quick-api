@@ -27,6 +27,14 @@ pipeline {
         stage('Deploy') {
             steps {
 				echo 'Deploying....'
+				timeout(5) {
+					waitUntil {
+						script {
+							def r = sh script: 'wget -q http://192.168.33.10:8080/JDBC/employees/12345 -O /dev/null', returnStatus: true
+							return (r == 0);
+							}
+						}
+					}
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
 					unstash "JDBC"
