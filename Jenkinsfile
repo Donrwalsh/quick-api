@@ -22,7 +22,6 @@ pipeline {
             steps {
 				echo 'Deploying....'
 				node ('stage') {
-					stage 'Trying out nodes'
 					sh 'echo potato'
 				}
             }
