@@ -5,6 +5,7 @@
     ├── api                     # API Endpoints
     |   ├── JDBC                # Simple JDBC CRUD API Implementation
     |   ├── JDBC_T              # JDBC Template CRUD API Implementation
+	|   ├── test                # Karate Integration Tests
     ├── dev-env                 # Developer environment via vagrant
     ├── frontend                # HTML, js files
 

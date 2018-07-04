@@ -10,6 +10,9 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import javax.inject.Named;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +46,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement statement = con.prepareStatement(CREATE_EMPLOYEE, Statement.RETURN_GENERATED_KEYS);
-                statement.setDate(1, input.getBirthDate());
+                statement.setObject(1, input.getBirthDate());
                 statement.setString(2, input.getFirstName());
                 statement.setString(3, input.getLastName());
                 statement.setString(4, input.getGender());
-                statement.setDate(5, input.getHireDate());
+                statement.setObject(5, input.getHireDate());
                 return statement;
             }
         }, holder);
@@ -112,11 +115,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
             Employee employee = new Employee(
                     rs.getInt("emp_no"),
-                    rs.getDate("birth_date"),
+                    LocalDate.parse(rs.getString("birth_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("gender"),
-                    rs.getDate("hire_date")
+                    LocalDate.parse(rs.getString("hire_date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             );
 
             return employee;
