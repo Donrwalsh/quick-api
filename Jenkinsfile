@@ -23,6 +23,9 @@ pipeline {
         }
         stage('Test') {
             steps {
+				dir("api/test") {
+					sh 'mvn clean test'
+				}
                 echo 'Testing..'
             }
         }
