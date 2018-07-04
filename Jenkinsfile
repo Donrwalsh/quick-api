@@ -20,6 +20,7 @@ pipeline {
 					sh 'mvn clean package -Dmaven.test.skip=true'
 					dir("target") {
 						stash includes: 'JDBC_T.war', name: 'JDBC_T'
+					}
 				}
             }
         }
