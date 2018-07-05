@@ -35,12 +35,10 @@ pipeline {
 				}
 				timeout(5) {
 					waitUntil {
-						def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
-						def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
-						if (jdbc == "HTTP/1.1 200 OK") {
-							return true
-						} else {
-							return false
+						script {
+							def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
+							def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
+							jdbc == "HTTP/1.1 200 OK"
 						}
 					}
 				}	
