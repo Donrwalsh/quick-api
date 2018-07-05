@@ -29,17 +29,11 @@ pipeline {
 				echo 'Deploying....'
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
-					
-					sh 'rm -rf JDBC.war'
-					sh 'rm -rf JDBC/ -r'
-					sh 'rm -rf JDBC_T.war'
-					sh 'rm -rf JDBC_T/ -r'
-					sh 'systemctl restart tomcat8'
-					
 					unstash "JDBC"
 					unstash "JDBC_T"
 					}
 				}
+				sleep(5)
 				script {
 					timeout(5) {
 						waitUntil {
