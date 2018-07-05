@@ -38,7 +38,7 @@ pipeline {
 						script {
 							def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
 							def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
-							jdbc == "HTTP/1.1 200 OK"
+							return jdbc == "HTTP/1.1 200 OK"
 						}
 					}
 				}	
