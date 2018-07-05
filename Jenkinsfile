@@ -33,13 +33,14 @@ pipeline {
 					unstash "JDBC_T"
 					}
 				}
-			waitUntil {
-				try {
-					sh "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep '200 OK'"
-					return true
-				} catch (Exception e) {
-					return false
-				}
+				waitUntil {
+					try {
+						sh "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep '200 OK'"
+						return true
+					} catch (Exception e) {
+						return false
+					}
+				}	
 			}
 		}
         stage('Test') {
