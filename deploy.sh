@@ -59,3 +59,18 @@ if [ "$env" == "prod" -o "$env" == "all" ]; then
 		sudo cp -rv /home/deploy/frontend/* /var/lib/tomcat8/webapps/ROOT/;
 		sudo cp -rv /home/deploy/*.war /var/lib/tomcat8/webapps/ ;"
 fi
+
+sleep 5
+JDBC_RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC/sanity | grep "HTTP/1.1")
+JDBC_T_RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC_T/sanity | grep "HTTP/1.1")
+echo "JDBC: $JDBC_RSP"
+echo "JDBC_T: $JDBC_T_RSP"
+
+until [ "$JDBC_RSP" == $"HTTP/1.1 200 OK" -a "$JDBC_T_RSP" == $"HTTP/1.1 200 OK" ]
+do
+	RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC/sanity | grep "HTTP/1.1")
+	JDBC_T_RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC_T/sanity | grep "HTTP/1.1")
+	echo "JDBC: $JDBC_RSP"
+	echo "JDBC_T: $JDBC_T_RSP"
+	sleep 5
+done
