@@ -40,7 +40,7 @@ pipeline {
 							def jdbc = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
 							def jdbc_t = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
 							
-							return jdbc.contains("HTTP/1.1 200 OK")
+							return jdbc.contains("HTTP/1.1 200 OK") && jdbc_t.contains("HTTP/1.1 200 OK")
 						}
 					}
 				}	
