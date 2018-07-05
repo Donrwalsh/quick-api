@@ -33,9 +33,11 @@ pipeline {
 					unstash "JDBC_T"
 					}
 				}
-				sleep 30
-            }
-        }
+			waitUntil {
+				sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://192.168.33.10:8080/JDBC/sanity -O /dev/null'
+				}
+			}
+		}
         stage('Test') {
             steps {
 				dir("api/test") {
