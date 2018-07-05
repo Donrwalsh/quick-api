@@ -33,11 +33,13 @@ pipeline {
 					unstash "JDBC_T"
 					}
 				}
-				timeout(5) {
-					waitUntil {
-						def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
-						def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
-						return (jdbc == "HTTP/1.1 200 OK")
+				script {
+					timeout(5) {
+						waitUntil {
+							def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
+							def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
+							return (jdbc == "HTTP/1.1 200 OK")
+						}
 					}
 				}	
 			}
