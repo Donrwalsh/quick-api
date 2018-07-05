@@ -29,6 +29,13 @@ pipeline {
 				echo 'Deploying....'
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
+					
+					sh 'rm -rf JDBC.war'
+					sh 'rm -rf JDBC/ -r'
+					sh 'rm -rf JDBC_T.war'
+					sh 'rm -rf JDBC_T/ -r'
+					sh 'systemctl restart tomcat8'
+					
 					unstash "JDBC"
 					unstash "JDBC_T"
 					}
@@ -36,9 +43,10 @@ pipeline {
 				script {
 					timeout(5) {
 						waitUntil {
-							def jdbc = sh script: "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep 'HTTP/1.1'"
-							def jdbc_t = sh script: "curl -I -s http://192.168.33.10:8080/JDBC_T/sanity | grep 'HTTP/1.1'"
-							return (jdbc == "HTTP/1.1 200 OK")
+							def jdbc = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
+							def jdbc_t = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
+							
+							return jdbc.contains("HTTP/1.1 200 OK")
 						}
 					}
 				}	
