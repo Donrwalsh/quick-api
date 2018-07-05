@@ -34,7 +34,11 @@ pipeline {
 					}
 				}
 			waitUntil {
-				sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://192.168.33.10:8080/JDBC/sanity -O /dev/null'
+				try {
+					sh "curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep '200 OK'"
+					return true
+				} catch (Exception e) {
+					return false
 				}
 			}
 		}
