@@ -18,6 +18,8 @@ public class ExceptionService {
                 throw new DatabaseException(e.getMessage());
             case "EmployeeNotFoundException":
                 throw new EmployeeNotFoundException(e.getMessage());
+            case "DatabaseException":
+                throw new DatabaseException(e.getMessage());
             case "DatabaseConnectionException":
                 throw new DatabaseConnectionException(e.getMessage());
             case "SQLSyntaxErrorException":

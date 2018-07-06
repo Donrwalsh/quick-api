@@ -28,13 +28,13 @@ public class EmployeeController {
     @PostMapping(consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<?> create(@RequestBody() @Valid Employee input) throws Exception {
-        if (input.getEmpNo() != 0) {
-            throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
-        }
         List<Employee> response = new ArrayList<>();
         URI location;
         int createdID = 0;
         try {
+            if (input.getEmpNo() != 0) {
+                throw new DatabaseException("Your request body contained an emp_no. Please remove it and try again");
+            }
             createdID = employeeDAO.create(input);
             response = employeeDAO.show(Integer.toString(createdID));
         } catch (Exception e) {

@@ -1,7 +1,7 @@
-Feature: JDBC CRUD Error Validation
+Feature: JDBC_T CRUD Error Validation
 
   Background:
-    * def URL = apiURL + '/JDBC/employees/'
+    * def URL = apiURL + '/JDBC_T/employees/'
 
   Scenario: Create Endpoint
 

@@ -1,6 +1,7 @@
 package com.perficient.JDBC_T.error;
 
 import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+import com.perficient.JDBC_T.exception.DatabaseException;
 import com.perficient.JDBC_T.exception.EmployeeNotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -67,6 +68,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleException(Exception ex) {
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex);
         apiError.setDebugMessage(ex.toString());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    protected ResponseEntity<Object> handleDatabaseException(DatabaseException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Database Error", ex);
         return buildResponseEntity(apiError);
     }
 
