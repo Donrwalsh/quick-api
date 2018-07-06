@@ -60,7 +60,7 @@ if [ "$env" == "prod" -o "$env" == "all" ]; then
 		sudo cp -rv /home/deploy/*.war /var/lib/tomcat8/webapps/ ;"
 fi
 
-sleep 5
+sleep 15
 JDBC_RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC/sanity | grep "HTTP/1.1")
 JDBC_T_RSP=$(curl -I -s http://quick-api-dev.com:8080/JDBC_T/sanity | grep "HTTP/1.1")
 echo "JDBC: $JDBC_RSP"
