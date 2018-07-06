@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,11 +85,19 @@ public class EmployeeController {
 
     private void validateEmployee(String id) throws Exception {
         try {
+            if (!isNumeric(id)) {
+                throw new SQLSyntaxErrorException(id + " is not a valid employee id. Please use an integer");
+            }
             if (this.employeeDAO.show(id).isEmpty()) {
                 throw new EmployeeNotFoundException(id);
             }
         } catch (Exception e) {
             exceptionService.toss(e);
         }
+    }
+
+    public static boolean isNumeric(String str)
+    {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 }

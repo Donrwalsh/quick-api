@@ -26,4 +26,14 @@ Feature: JDBC_T CRUD Error Validation
     Then status 400
     And match response contains {status:"BAD_REQUEST",message:"Database Error"}
 
+  Scenario: Read Endpoint
+
+    #Read endpoint should not accept requests with invalid URI param
+    Given url URL + 'potato'
+    When method GET
+    Then status 400
+    And match response contains {status:"BAD_REQUEST",message:"SQL Syntax Error"}
+
+
+
 
