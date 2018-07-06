@@ -24,9 +24,9 @@ pipeline {
 				}
             }
         }
-        stage('Deploy') {
+        stage('Test') {
             steps {
-				echo 'Deploying....'
+				echo 'Staging...'
 				node ('stage') {
 				dir('/var/lib/tomcat8/webapps/') {
 					unstash "JDBC"
@@ -43,15 +43,16 @@ pipeline {
 							return jdbc.contains("HTTP/1.1 200 OK") && jdbc_t.contains("HTTP/1.1 200 OK")
 						}
 					}
-				}	
-			}
-		}
-        stage('Test') {
-            steps {
+				}
+				echo 'Testing....'
 				dir("api/test") {
 					sh 'mvn clean test -DargLine=\\"-Dkarate.env=stg\\"'
-				}
-                echo 'Testing..'
+				}				
+			}
+		}
+        stage('Deploy') {
+            steps {
+                echo 'Deploying.....'
             }
         }
     }
