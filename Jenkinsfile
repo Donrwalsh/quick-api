@@ -33,7 +33,7 @@ pipeline {
 					unstash "JDBC_T"
 					}
 				}
-				sh 'sleep 10'
+				sh 'sleep 20'
 				script {
 					timeout(5) {
 						waitUntil {
