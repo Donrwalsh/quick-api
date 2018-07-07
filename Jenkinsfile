@@ -28,19 +28,19 @@ pipeline {
             steps {
 				echo 'Staging...'
 				node ('stage') {
-				dir('/var/lib/tomcat8/webapps/') {
-					unstash "JDBC"
-					unstash "JDBC_T"
+					dir('/var/lib/tomcat8/webapps/') {
+						unstash "JDBC"
+						unstash "JDBC_T"
 					}
 				}
 				sh 'sleep 20'
 				script {
 					timeout(5) {
 						waitUntil {
-							def jdbc = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
-							def jdbc_t = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
+							def stage_jdbc = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
+							def stage_jdbc_t = sh returnStdout: true, script: 'curl -I -s http://192.168.33.10:8080/JDBC/sanity | grep "HTTP/1.1"'
 							
-							return jdbc.contains("HTTP/1.1 200 OK") && jdbc_t.contains("HTTP/1.1 200 OK")
+							return stage_jdbc.contains("HTTP/1.1 200 OK") && stage_jdbc_t.contains("HTTP/1.1 200 OK")
 						}
 					}
 				}
@@ -53,6 +53,22 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying.....'
+				node ('prod') {
+					dir('var/lib/tomcat8/webapps/') {
+					unstash "JDBC"
+					unstash "JDBC_T"
+				}
+				sh 'sleep 20'
+				script {
+					timeout(5) {
+						waitUntil {
+							def prod_jdbc = sh returnStdout: true, script: 'curl -I -s http://www.quick-api.com:8080/JDBC/sanity | grep "HTTP/1.1"'
+							def prod_jdbc_t = sh returnStdout: true, script: 'curl -I -s http://www.quick-api.com:8080/JDBC/sanity | grep "HTTP/1.1"'
+							
+							return prod_jdbc.contains("HTTP/1.1 200 OK") && prod_jdbc_t.contains("HTTP/1.1 200 OK")
+						}
+					}
+				}
             }
         }
     }
